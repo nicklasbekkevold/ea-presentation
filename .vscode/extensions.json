@@ -1,0 +1,10 @@
+{
+  "recommendations": [
+    "charliermarsh.ruff",
+    "DavidAnson.vscode-markdownlint",
+    "eamodio.gitlens",
+    "ms-python.python",
+    "redhat.fabric8-analytics",
+    "streetsidesoftware.code-spell-checker"
+  ]
+}
