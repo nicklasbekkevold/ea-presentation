@@ -1,4 +1,11 @@
-from src.chromosome import crossover, generate_chromosome, generate_population, mutate
+import numpy as np
+
+from src.chromosome import (
+    crossover,
+    generate_chromosome,
+    generate_population,
+    mutate,
+)
 
 
 def test_generate_chromosome() -> None:
@@ -14,12 +21,12 @@ def test_generate_population() -> None:
 
 def test_mutate() -> None:
     chromosome = generate_chromosome(13)
+
     mutated_chromosome = mutate(chromosome, mutation_rate=0)
-    assert chromosome == mutated_chromosome
+    assert (chromosome == mutated_chromosome).all()
+
     mutated_chromosome = mutate(chromosome, mutation_rate=1)
-    changes = zip(chromosome, mutated_chromosome)
-    difference = sum(before != after for before, after in changes)
-    assert difference == 13
+    assert np.logical_xor(chromosome, mutated_chromosome).all()
 
 
 def test_crossover() -> None:
@@ -27,8 +34,8 @@ def test_crossover() -> None:
     parent_b = generate_chromosome(13)
 
     child_a, child_b = crossover(parent_a, parent_b, crossover_rate=0)
-    assert child_a == parent_a
-    assert child_b == parent_b
+    assert (child_a == parent_a).all()
+    assert (child_b == parent_b).all()
 
     child_a, child_b = crossover(parent_a, parent_b, crossover_rate=1)
     assert child_a[0] == parent_a[0]

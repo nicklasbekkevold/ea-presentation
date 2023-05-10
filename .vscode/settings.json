@@ -15,5 +15,12 @@
       "source.fixAll.markdownlint": true
     }
   },
-  "cSpell.words": ["asarray", "loadtxt", "sklearn"]
+  "cSpell.words": [
+    "arange",
+    "asarray",
+    "bitflip",
+    "bitflips",
+    "loadtxt",
+    "sklearn"
+  ]
 }
