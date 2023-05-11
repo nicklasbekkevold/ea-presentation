@@ -16,12 +16,22 @@
     }
   },
   "cSpell.words": [
+    "allclose",
     "arange",
     "asarray",
     "astype",
     "bitflip",
     "bitflips",
+    "coef",
+    "labelcolor",
+    "linestyle",
     "loadtxt",
-    "sklearn"
+    "pyplot",
+    "rmse",
+    "savefig",
+    "sklearn",
+    "twinx",
+    "xlabel",
+    "ylabel"
   ]
 }
