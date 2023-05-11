@@ -9,14 +9,15 @@ def main():
 
     fitness_function = create_fitness_function()
     baseline = np.full((parameters.CHROMOSOME_LENGTH,), True)
-    add_metrics, save_metrics = metrics.create_metrics_hooks(baseline, fitness_function)
+    add_metrics, save_results = metrics.create_hooks(baseline, fitness_function)
 
     solution = ga.optimize(
-        fitness_function, generational_hook=add_metrics, post_optimize_hook=save_metrics
+        fitness_function, generational_hook=add_metrics, post_optimize_hook=save_results
     )
+
     print(f"Solution found: {print_chromosome(solution)}")
-    print(f"Solution RMSE:  {-fitness_function(solution)}")
-    print(f"Baseline RMSE:  {-fitness_function(baseline)}")
+    print(f"Solution -RMSE:  {-fitness_function(solution)}")
+    print(f"Baseline -RMSE:  {-fitness_function(baseline)}")
 
 
 if __name__ == "__main__":
