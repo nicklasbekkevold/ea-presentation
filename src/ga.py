@@ -86,13 +86,13 @@ def generational_step(
     mutation_rate=parameters.MUTATION_RATE,
 ) -> npt.NDArray:
     offspring = find_elite(population, fitness_function, elite_size)
-    for _ in range(len(population)):
+    for _ in range((len(population) - elite_size) // 2):
         parent_a = tournament_selection(population, fitness_function, tournament_size)
         parent_b = tournament_selection(population, fitness_function, tournament_size)
         offspring_a, offspring_b = crossover(parent_a, parent_b, crossover_rate)
         offspring_a = mutate(offspring_a, mutation_rate)
         offspring_b = mutate(offspring_b, mutation_rate)
-        np.append(offspring, [offspring_a, offspring_b])
+        offspring = np.append(offspring, [offspring_a, offspring_b], axis=0)
     return offspring
 
 
