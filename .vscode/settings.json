@@ -18,6 +18,7 @@
   "cSpell.words": [
     "arange",
     "asarray",
+    "astype",
     "bitflip",
     "bitflips",
     "loadtxt",
