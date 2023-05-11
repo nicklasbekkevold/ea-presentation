@@ -61,12 +61,12 @@ def crossover(
     return chromosome_a, chromosome_b
 
 
-def elite(
+def find_elite(
     population: npt.NDArray,
     fitness_function: Callable[[npt.NDArray], float],
     elite_size=parameters.ELITE_SIZE,
 ) -> npt.NDArray:
-    return sorted(population, key=fitness_function)[:elite_size]
+    return np.array(sorted(population, key=fitness_function, reverse=True)[:elite_size])
 
 
 def tournament_selection(
@@ -74,8 +74,8 @@ def tournament_selection(
     fitness_function: Callable[[npt.NDArray], float],
     tournament_size=parameters.TOURNAMENT_SIZE,
 ):
-    tournament = population[np.random.choice(len(population), tournament_size)]
-    return sorted(tournament, key=fitness_function)[0]
+    tournament = population[np.random.choice(population.shape[0], tournament_size)]
+    return np.array(sorted(tournament, key=fitness_function, reverse=True)[0])
 
 
 def average_fitness(
@@ -92,7 +92,7 @@ def generational_step(
     crossover_rate=parameters.CROSSOVER_RATE,
     mutation_rate=parameters.MUTATION_RATE,
 ) -> npt.NDArray:
-    offspring = elite(population, fitness_function, elite_size)
+    offspring = find_elite(population, fitness_function, elite_size)
     for _ in range(len(population)):
         parent_a = tournament_selection(population, fitness_function, tournament_size)
         parent_b = tournament_selection(population, fitness_function, tournament_size)
@@ -101,3 +101,28 @@ def generational_step(
         offspring_b = mutate(offspring_b, mutation_rate)
         np.append(offspring, [offspring_a, offspring_b])
     return offspring
+
+
+def optimize(
+    fitness_function: Callable[[npt.NDArray], float],
+    generations=parameters.GENERATIONS,
+    chromosome_length=parameters.CHROMOSOME_LENGTH,
+    population_size=parameters.POPULATION_SIZE,
+    elite_size=parameters.ELITE_SIZE,
+    tournament_size=parameters.TOURNAMENT_SIZE,
+    crossover_rate=parameters.CROSSOVER_RATE,
+    mutation_rate=parameters.MUTATION_RATE,
+) -> npt.NDArray:
+    population = generate_population(chromosome_length, population_size)
+    for generation in range(generations):
+        print(generation)
+        new_population = generational_step(
+            population,
+            fitness_function,
+            elite_size,
+            tournament_size,
+            crossover_rate,
+            mutation_rate,
+        )
+        population = new_population
+    return population
