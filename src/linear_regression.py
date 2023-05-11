@@ -38,7 +38,7 @@ def print_chromosome(chromosome: npt.NDArray) -> str:
     return "".join(chromosome.astype(int).astype(str).tolist())
 
 
-def hash(chromosome: npt.NDArray) -> int:
+def bit_hash(chromosome: npt.NDArray) -> int:
     return int(print_chromosome(chromosome), 2)
 
 
@@ -48,10 +48,10 @@ def create_fitness_function() -> Callable[[npt.NDArray], float]:
     cache = {}
 
     def memoized_fitness_function(chromosome: npt.NDArray) -> float:
-        if hash(chromosome) in cache:
-            return cache[hash(chromosome)]
+        if bit_hash(chromosome) in cache:
+            return cache[bit_hash(chromosome)]
         fitness = compute_negative_rmse(chromosome, features, labels)
-        cache[hash(chromosome)] = fitness
+        cache[bit_hash(chromosome)] = fitness
         return fitness
 
     return memoized_fitness_function

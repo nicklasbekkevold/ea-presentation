@@ -13,7 +13,7 @@ def test_best_fitness() -> None:
     def fitness_function(chromosome):
         return int("".join(chromosome.astype(int).astype(str).tolist()), 2)
 
-    assert (best_fitness(population, fitness_function) == population[2]).all()
+    assert best_fitness(population, fitness_function) == 2
 
 
 def test_average_fitness() -> None:
