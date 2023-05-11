@@ -1,3 +1,6 @@
+import statistics
+from typing import Callable
+
 import numpy as np
 import numpy.typing as npt
 
@@ -56,3 +59,45 @@ def crossover(
         )
         return offspring_a, offspring_b
     return chromosome_a, chromosome_b
+
+
+def elite(
+    population: npt.NDArray,
+    fitness_function: Callable[[npt.NDArray], float],
+    elite_size=parameters.ELITE_SIZE,
+) -> npt.NDArray:
+    return sorted(population, key=fitness_function)[:elite_size]
+
+
+def tournament_selection(
+    population: npt.NDArray,
+    fitness_function: Callable[[npt.NDArray], float],
+    tournament_size=parameters.TOURNAMENT_SIZE,
+):
+    tournament = population[np.random.choice(len(population), tournament_size)]
+    return sorted(tournament, key=fitness_function)[0]
+
+
+def average_fitness(
+    population: npt.NDArray, fitness_function: Callable[[npt.NDArray], float]
+) -> float:
+    return statistics.fmean(list(map(fitness_function, population)))
+
+
+def generational_step(
+    population: npt.NDArray,
+    fitness_function: Callable[[npt.NDArray], float],
+    elite_size=parameters.ELITE_SIZE,
+    tournament_size=parameters.TOURNAMENT_SIZE,
+    crossover_rate=parameters.CROSSOVER_RATE,
+    mutation_rate=parameters.MUTATION_RATE,
+) -> npt.NDArray:
+    offspring = elite(population, fitness_function, elite_size)
+    for _ in range(len(population)):
+        parent_a = tournament_selection(population, fitness_function, tournament_size)
+        parent_b = tournament_selection(population, fitness_function, tournament_size)
+        offspring_a, offspring_b = crossover(parent_a, parent_b, crossover_rate)
+        offspring_a = mutate(offspring_a, mutation_rate)
+        offspring_b = mutate(offspring_b, mutation_rate)
+        np.append(offspring, [offspring_a, offspring_b])
+    return offspring

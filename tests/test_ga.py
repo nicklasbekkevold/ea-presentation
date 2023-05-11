@@ -1,6 +1,6 @@
 import numpy as np
 
-from src.chromosome import (
+from src.ga import (
     crossover,
     generate_chromosome,
     generate_population,
