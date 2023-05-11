@@ -8,10 +8,7 @@ PARAMETERS_PATH = "src/parameters.py"
 def get_latest_result_folder_number(path=RESULTS_FOLDER) -> int:
     if not os.path.exists(path):
         return 0
-
-    all_folders = os.listdir(path)
-    all_folders.sort()
-    return int(all_folders[-1])
+    return len(os.listdir(path))
 
 
 def get_current_result_folder(path=RESULTS_FOLDER) -> str:
