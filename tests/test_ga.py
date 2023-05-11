@@ -1,9 +1,7 @@
 import numpy as np
 
 from src.ga import (
-    average_fitness,
     crossover,
-    entropy,
     find_elite,
     generate_chromosome,
     generate_population,
@@ -50,7 +48,7 @@ def test_crossover() -> None:
     assert len(child_b) == len(parent_b)
 
 
-def test_elite() -> None:
+def test_find_elite() -> None:
     population = np.array([[False, False], [False, True], [True, False]])
 
     def fitness_function(chromosome):
@@ -68,17 +66,3 @@ def test_tournament_selection() -> None:
 
     chromosome = tournament_selection(population, fitness_function, 3)
     assert (chromosome == population[2]).all()
-
-
-def test_average_fitness() -> None:
-    population = np.array([[False, False], [False, True], [True, False]])
-
-    def fitness_function(chromosome):
-        return int("".join(chromosome.astype(int).astype(str).tolist()), 2)
-
-    assert average_fitness(population, fitness_function) == 1
-
-
-def test_entropy() -> None:
-    assert entropy(np.array([[False, False]])) == 0
-    assert entropy(np.array([[False, False], [True, True]])) == 1

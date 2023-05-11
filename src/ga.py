@@ -1,4 +1,3 @@
-import statistics
 from typing import Callable
 
 import numpy as np
@@ -78,18 +77,6 @@ def tournament_selection(
     return np.array(sorted(tournament, key=fitness_function, reverse=True)[0])
 
 
-def average_fitness(
-    population: npt.NDArray, fitness_function: Callable[[npt.NDArray], float]
-) -> float:
-    return statistics.fmean(list(map(fitness_function, population)))
-
-
-def entropy(population):
-    occurrences = np.sum(population, axis=0)
-    probabilities = occurrences / len(population)
-    return -sum([p * np.log2(p) if p != 0 else 0 for p in probabilities])
-
-
 def generational_step(
     population: npt.NDArray,
     fitness_function: Callable[[npt.NDArray], float],
@@ -118,11 +105,11 @@ def optimize(
     tournament_size=parameters.TOURNAMENT_SIZE,
     crossover_rate=parameters.CROSSOVER_RATE,
     mutation_rate=parameters.MUTATION_RATE,
+    generation_hook=lambda x: None,
 ) -> npt.NDArray:
     population = generate_population(chromosome_length, population_size)
     for generation in range(generations):
-        print(generation)
-        new_population = generational_step(
+        population = generational_step(
             population,
             fitness_function,
             elite_size,
@@ -130,5 +117,4 @@ def optimize(
             crossover_rate,
             mutation_rate,
         )
-        population = new_population
     return population
