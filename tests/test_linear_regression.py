@@ -2,7 +2,7 @@ import numpy as np
 import numpy.typing as npt
 import pytest
 
-from src.linear_regression import compute_fitness, filter_data, train
+from src.linear_regression import compute_negative_rmse, filter_data, train
 
 
 @pytest.fixture
@@ -29,4 +29,4 @@ def test_train(features: npt.NDArray, labels: npt.NDArray) -> None:
 
 def test_compute_fitness(features: npt.NDArray, labels: npt.NDArray) -> None:
     chromosome = np.array([True, True, True])
-    assert np.isclose(compute_fitness(chromosome, features, labels), 0)
+    assert np.isclose(compute_negative_rmse(chromosome, features, labels), 0)
