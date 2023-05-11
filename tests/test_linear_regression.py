@@ -29,4 +29,4 @@ def test_train(features: npt.NDArray, labels: npt.NDArray) -> None:
 
 def test_compute_fitness(features: npt.NDArray, labels: npt.NDArray) -> None:
     chromosome = np.array([True, True, True])
-    assert compute_fitness(chromosome, features, labels) == 0
+    assert np.isclose(compute_fitness(chromosome, features, labels), 0)
