@@ -1,14 +1,23 @@
+import csv
 import statistics
 from typing import Callable
 
 import numpy as np
 import numpy.typing as npt
 
+from . import results
+
+
+def baseline_fitness(
+    chromosome: npt.NDArray, fitness_function: Callable[[npt.NDArray], float]
+) -> float:
+    return fitness_function(chromosome)
+
 
 def best_fitness(
     population: npt.NDArray, fitness_function: Callable[[npt.NDArray], float]
 ) -> float:
-    return max(population, key=fitness_function)
+    return max(list(map(fitness_function, population)))
 
 
 def average_fitness(
