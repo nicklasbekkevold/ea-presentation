@@ -14,10 +14,6 @@ def train(features: npt.NDArray, labels: npt.NDArray) -> LinearRegression:
     return LinearRegression().fit(features, labels)
 
 
-def root_mean_squared_error(y_test, y_pred) -> float:
-    return mean_squared_error(y_test, y_pred, squared=False)
-
-
 def filter_data(data: npt.NDArray, mask: npt.NDArray) -> npt.NDArray:
     return np.delete(data, np.where(~mask), axis=1)
 
@@ -33,4 +29,4 @@ def compute_fitness(
     )
     model = train(x_train, y_train)
     y_pred = model.predict(x_test)
-    return root_mean_squared_error(y_test, y_pred)
+    return mean_squared_error(y_test, y_pred, squared=False)
