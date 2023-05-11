@@ -26,9 +26,8 @@ def get_fitness_function() -> float:
 def main():
     np.random.seed(parameters.SEED)
 
-    population = ga.generate_population()
     fitness_function = get_fitness_function()
-    print(ga.generational_step(population, fitness_function))
+    print(ga.optimize(fitness_function))
 
 
 if __name__ == "__main__":

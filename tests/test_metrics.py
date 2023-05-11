@@ -2,8 +2,18 @@ import numpy as np
 
 from src.metrics import (
     average_fitness,
+    best_fitness,
     entropy,
 )
+
+
+def test_best_fitness() -> None:
+    population = np.array([[False, False], [False, True], [True, False]])
+
+    def fitness_function(chromosome):
+        return int("".join(chromosome.astype(int).astype(str).tolist()), 2)
+
+    assert (best_fitness(population, fitness_function) == population[2]).all()
 
 
 def test_average_fitness() -> None:
