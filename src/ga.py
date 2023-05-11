@@ -77,6 +77,10 @@ def tournament_selection(
     return np.array(sorted(tournament, key=fitness_function, reverse=True)[0])
 
 
+def none_function(*args, **kwargs) -> None:
+    pass
+
+
 def generational_step(
     population: npt.NDArray,
     fitness_function: Callable[[npt.NDArray], float],
@@ -105,10 +109,12 @@ def optimize(
     tournament_size=parameters.TOURNAMENT_SIZE,
     crossover_rate=parameters.CROSSOVER_RATE,
     mutation_rate=parameters.MUTATION_RATE,
-    generation_hook=lambda x: None,
+    generational_hook: Callable[[int, npt.NDArray], None] = none_function,
+    post_optimize_hook: Callable[[], None] = none_function,
 ) -> npt.NDArray:
     population = generate_population(chromosome_length, population_size)
     for generation in range(generations):
+        generational_hook(generation, population)
         population = generational_step(
             population,
             fitness_function,
@@ -117,4 +123,5 @@ def optimize(
             crossover_rate,
             mutation_rate,
         )
-    return population
+    post_optimize_hook()
+    return find_elite(population, fitness_function, 1)[0]
