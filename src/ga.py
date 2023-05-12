@@ -110,9 +110,10 @@ def optimize(
     crossover_rate=parameters.CROSSOVER_RATE,
     mutation_rate=parameters.MUTATION_RATE,
     generational_hook: Callable[[int, npt.NDArray], None] = none_function,
-    post_optimize_hook: Callable[[], None] = none_function,
+    post_optimize_hook: Callable[[npt.NDArray], None] = none_function,
 ) -> npt.NDArray:
     population = generate_population(chromosome_length, population_size)
+
     for generation in range(generations):
         generational_hook(generation, population)
         population = generational_step(
@@ -123,5 +124,7 @@ def optimize(
             crossover_rate,
             mutation_rate,
         )
-    post_optimize_hook()
-    return find_elite(population, fitness_function, 1)[0]
+
+    solution = find_elite(population, fitness_function, 1)[0]
+    post_optimize_hook(solution)
+    return solution

@@ -1,6 +1,8 @@
 import os
 import shutil
 
+import numpy.typing as npt
+
 RESULTS_FOLDER = "results"
 PARAMETERS_PATH = "src/parameters.py"
 
@@ -24,3 +26,7 @@ def copy_parameters(path=RESULTS_FOLDER) -> None:
     latest_result_folder = get_current_result_folder(path)
     destination = f"{latest_result_folder}/parameters.py"
     shutil.copyfile(PARAMETERS_PATH, destination)
+
+
+def print_solution(chromosome: npt.NDArray) -> str:
+    return "".join(chromosome.astype(int).astype(str).tolist())

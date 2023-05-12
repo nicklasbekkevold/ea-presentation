@@ -1,7 +1,8 @@
 import numpy as np
 
 from src import ga, metrics, parameters
-from src.linear_regression import create_fitness_function, print_chromosome
+from src.linear_regression import create_fitness_function
+from src.results import print_solution
 
 
 def main():
@@ -15,9 +16,9 @@ def main():
         fitness_function, generational_hook=add_metrics, post_optimize_hook=save_results
     )
 
-    print(f"Solution found: {print_chromosome(solution)}")
-    print(f"Solution -RMSE:  {-fitness_function(solution)}")
-    print(f"Baseline -RMSE:  {-fitness_function(baseline)}")
+    print(f"Solution found: {print_solution(solution)}")
+    print(f"Solution RMSE: {-fitness_function(solution)}")
+    print(f"Baseline RMSE: {-fitness_function(baseline)}")
 
 
 if __name__ == "__main__":

@@ -65,16 +65,22 @@ def save_metrics(metrics: dict[str, list], path: str) -> None:
         writer.writerows(zip(*metrics.values()))
 
 
+def save_solution(chromosome: npt.NDArray, path: str) -> None:
+    with open(path, "w") as text_file:
+        text_file.write(results.print_solution(chromosome))
+
+
 def create_hooks(
     baseline_chromosome: npt.NDArray,
     fitness_function: Callable[[npt.NDArray], float],
-) -> tuple[Callable[[int, npt.NDArray], None], Callable[[], None]]:
+) -> tuple[Callable[[int, npt.NDArray], None], Callable[[npt.NDArray], None]]:
     metrics = {
         "generation": [],
         "baseline": [],
         "best": [],
         "average": [],
         "entropy": [],
+        "solution": "",
     }
     baseline = baseline_fitness(baseline_chromosome, fitness_function)
 
@@ -85,12 +91,13 @@ def create_hooks(
         metrics["average"].append(average_fitness(population, fitness_function))
         metrics["entropy"].append(entropy(population))
 
-    def save_results() -> None:
+    def save_results(solution: npt.NDArray) -> None:
         results.create_result_folder()
         results.copy_parameters()
         result_folder = results.get_current_result_folder()
 
         plot_metrics(metrics, f"{result_folder}/ga.png")
         save_metrics(metrics, f"{result_folder}/metrics.csv")
+        save_solution(solution, f"{result_folder}/solution.txt")
 
     return add_metrics, save_results

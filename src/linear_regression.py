@@ -6,6 +6,8 @@ from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error
 from sklearn.model_selection import train_test_split
 
+from . import results
+
 
 def load_data_set_from_csv(path="data/data_set.csv") -> tuple[npt.NDArray, npt.NDArray]:
     data_set = np.array(np.loadtxt(path, delimiter=","))
@@ -34,12 +36,8 @@ def compute_negative_rmse(
     return -mean_squared_error(y_test, y_pred, squared=False)
 
 
-def print_chromosome(chromosome: npt.NDArray) -> str:
-    return "".join(chromosome.astype(int).astype(str).tolist())
-
-
 def bit_hash(chromosome: npt.NDArray) -> int:
-    return int(print_chromosome(chromosome), 2)
+    return int(results.print_solution(chromosome), 2)
 
 
 def create_fitness_function() -> Callable[[npt.NDArray], float]:
