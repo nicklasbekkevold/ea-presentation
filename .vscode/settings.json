@@ -4,6 +4,7 @@
   "editor.rulers": [88],
   "editor.formatOnSave": true,
   "python.formatting.blackArgs": ["--preview"],
+  "python.analysis.typeCheckingMode": "basic",
   "editor.codeActionsOnSave": {
     "source.organizeImports": true
   },
