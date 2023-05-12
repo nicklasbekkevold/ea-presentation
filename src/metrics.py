@@ -44,6 +44,7 @@ def plot_metrics(metrics: dict[str, list], path: str) -> None:
     ax1.plot(metrics["average"], color="tab:blue", label="Average")
     ax1.plot(metrics["baseline"], linestyle="-", color="k", label="Baseline")
     ax1.plot(metrics["best"], linestyle="--", color="k", label="Best")
+    ax1.legend()
 
     ax2 = ax1.twinx()
 
@@ -51,9 +52,9 @@ def plot_metrics(metrics: dict[str, list], path: str) -> None:
     ax2.tick_params(axis="y", labelcolor="tab:orange")
 
     ax2.plot(metrics["entropy"], color="tab:orange", label="Entropy")
+    ax2.legend()
 
     fig.tight_layout()
-    ax2.legend()
     fig.savefig(path)
     plt.close()
 
