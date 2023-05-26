@@ -1,6 +1,6 @@
 import csv
 import statistics
-from typing import Callable
+from typing import Any, Callable
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -59,7 +59,7 @@ def plot_metrics(metrics: dict[str, list], path: str) -> None:
     plt.close()
 
 
-def save_metrics(metrics: dict[str, list], path: str) -> None:
+def save_metrics(metrics: dict[str, list[Any]], path: str) -> None:
     with open(path, "w") as f:
         writer = csv.writer(f)
         writer.writerow(metrics.keys())
@@ -81,7 +81,6 @@ def create_hooks(
         "best": [],
         "average": [],
         "entropy": [],
-        "solution": "",
     }
     baseline = baseline_fitness(baseline_chromosome, fitness_function)
 
