@@ -1,3 +1,4 @@
+import logging
 from typing import Callable
 
 import numpy as np
@@ -112,9 +113,11 @@ def optimize(
     generational_hook: Callable[[int, npt.NDArray], None] = none_function,
     post_optimize_hook: Callable[[npt.NDArray], None] = none_function,
 ) -> npt.NDArray:
+    logging.info(f"Starting GA optimizer. Running for {generations} generations.")
     population = generate_population(chromosome_length, population_size)
 
     for generation in range(generations):
+        logging.info(f"Generation {generation+1}")
         generational_hook(generation, population)
         population = generational_step(
             population,
@@ -126,5 +129,7 @@ def optimize(
         )
 
     solution = find_elite(population, fitness_function, 1)[0]
+
+    logging.info("GA optimizer finished successfully.")
     post_optimize_hook(solution)
     return solution
