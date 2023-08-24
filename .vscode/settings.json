@@ -1,14 +1,16 @@
 {
-  "python.formatting.provider": "black",
-  "python.linting.enabled": true,
-  "editor.rulers": [88],
+  "ruff.enable": true,
+  "editor.rulers": [
+    88
+  ],
   "editor.formatOnSave": true,
-  "python.formatting.blackArgs": ["--preview"],
+  "black-formatter.args": [
+    "--preview"
+  ],
   "python.analysis.typeCheckingMode": "basic",
   "editor.codeActionsOnSave": {
     "source.organizeImports": true
   },
-
   "[markdown]": {
     "editor.formatOnSave": true,
     "editor.formatOnPaste": true,
@@ -34,5 +36,8 @@
     "twinx",
     "xlabel",
     "ylabel"
-  ]
+  ],
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.black-formatter",
+  }
 }
