@@ -27,6 +27,7 @@
     "bitflips",
     "coef",
     "labelcolor",
+    "levelname",
     "linestyle",
     "loadtxt",
     "pyplot",
