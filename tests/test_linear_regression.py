@@ -6,7 +6,6 @@ from src.linear_regression import (
     bit_hash,
     compute_negative_rmse,
     filter_data,
-    print_chromosome,
     train,
 )
 
@@ -36,12 +35,6 @@ def test_train(features: npt.NDArray, labels: npt.NDArray) -> None:
 def test_compute_negative_rmse(features: npt.NDArray, labels: npt.NDArray) -> None:
     chromosome = np.array([True, True, True])
     assert np.isclose(compute_negative_rmse(chromosome, features, labels), 0)
-
-
-def test_print_chromosome() -> None:
-    assert print_chromosome(np.array([True, True, True, True])) == "1111"
-    assert print_chromosome(np.array([True, False, True])) == "101"
-    assert print_chromosome(np.array([False, False])) == "00"
 
 
 def test_bit_hash() -> None:
