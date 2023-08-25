@@ -1,3 +1,5 @@
+from typing import Generator
+
 import numpy as np
 import numpy.typing as npt
 import pytest
@@ -11,12 +13,12 @@ from src.linear_regression import (
 
 
 @pytest.fixture
-def features() -> npt.NDArray:
+def features() -> Generator[npt.NDArray, None, None]:
     yield np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
 
 
 @pytest.fixture
-def labels() -> npt.NDArray:
+def labels() -> Generator[npt.NDArray, None, None]:
     yield np.array([6, 15, 24])
 
 
